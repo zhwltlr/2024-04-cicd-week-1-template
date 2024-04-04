@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Route53 Example
+
+Resources:
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-route53-hostedzone.html
+  MyHostedZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: unchaptered.shop
+      HostedZoneConfig:
+        Comment: Example Hosted Zone
+
+  # https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/quickref-route53.html
+  MyRecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref MyHostedZone
+      Name: www.unchaptered.shop
+      Type: A
+      TTL: '300'
+      ResourceRecords:
+        - 192.0.2.1   # 이 IP 주소를 실제로 사용하고 있는 서버의 IP로 변경하세요.
+
+Outputs:
+  HostedZoneId:
+    Description: Hosted Zone ID
+    Value: !Ref MyHostedZone

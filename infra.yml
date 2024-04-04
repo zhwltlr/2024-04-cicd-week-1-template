@@ -1,0 +1,22 @@
+# Create : aws cloudformation create-stack --stack-name monthly-cs-dns --template-body file://infra.yml --on-failure ROLLBACK --region us-east-1 --profile edint_official
+# Update : aws cloudformation update-stack --stack-name monthly-cs-dns --template-body file://infra.yml --region us-east-1 --profile edint_official
+# Delete : aws cloudformation delete-stack --stack-name monthly-cs-dns --profile edint_official
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Route53 Example
+
+Resources:
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-route53-hostedzone.html
+  WebsiteHostingZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: unchaptered.shop
+      HostedZoneConfig:
+        Comment: Unchaptered Practices
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-certificatemanager-certificate.html#cfn-certificatemanager-certificate-certificateauthorityarn
+  WebsiteHttpsACM:
+    Type: AWS::CertificateManager::Certificate
+
+    Properties:
+      DomainName: unchaptered.shop
+      ValidationMethod: DNS

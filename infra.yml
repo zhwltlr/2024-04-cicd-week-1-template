@@ -1,27 +1,22 @@
+# Create : aws cloudformation create-stack --stack-name monthly-cs-dns --template-body file://infra.yml --on-failure ROLLBACK --region us-east-1 --profile edint_official
+# Update : aws cloudformation update-stack --stack-name monthly-cs-dns --template-body file://infra.yml --region us-east-1 --profile edint_official
+# Delete : aws cloudformation delete-stack --stack-name monthly-cs-dns --profile edint_official
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Route53 Example
 
 Resources:
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-route53-hostedzone.html
-  MyHostedZone:
+  WebsiteHostingZone:
     Type: AWS::Route53::HostedZone
     Properties:
       Name: unchaptered.shop
       HostedZoneConfig:
-        Comment: Example Hosted Zone
+        Comment: Unchaptered Practices
 
-  # https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/quickref-route53.html
-  MyRecordSet:
-    Type: AWS::Route53::RecordSet
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-certificatemanager-certificate.html#cfn-certificatemanager-certificate-certificateauthorityarn
+  WebsiteHttpsACM:
+    Type: AWS::CertificateManager::Certificate
+
     Properties:
-      HostedZoneId: !Ref MyHostedZone
-      Name: www.unchaptered.shop
-      Type: A
-      TTL: '300'
-      ResourceRecords:
-        - 192.0.2.1   # 이 IP 주소를 실제로 사용하고 있는 서버의 IP로 변경하세요.
-
-Outputs:
-  HostedZoneId:
-    Description: Hosted Zone ID
-    Value: !Ref MyHostedZone
+      DomainName: unchaptered.shop
+      ValidationMethod: DNS

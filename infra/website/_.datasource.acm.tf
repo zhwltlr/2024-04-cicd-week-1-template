@@ -1,4 +1,4 @@
 data "aws_acm_certificate" "acm" {
-  domain   = "unchaptered.shop"
+  domain   = var.domain_name
   statuses = ["PENDING_VALIDATION", "ISSUED"]
 }

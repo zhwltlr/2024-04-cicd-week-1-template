@@ -9,4 +9,9 @@ resource "aws_acm_certificate" "acm" {
   depends_on = [
     aws_route53_zone.zone
   ]
+
+  tags = {
+    "monthly-cs" : "monthly-cs"
+    "week" : 1
+  }
 }

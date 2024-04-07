@@ -3,9 +3,14 @@ resource "aws_cloudfront_distribution" "cf_dist" {
   enabled             = true
   price_class         = "PriceClass_100"
   aliases             = [var.domain_name]
-  comment             = "Managed by Monthly-CS"
   is_ipv6_enabled     = true
   default_root_object = "/index.html"
+
+  comment = "Created by monthly-cs"
+  tags = {
+    "monthly-cs" : "monthly-cs"
+    "week" : 1
+  }
 
   origin {
     origin_id                = aws_s3_bucket.bucket.id

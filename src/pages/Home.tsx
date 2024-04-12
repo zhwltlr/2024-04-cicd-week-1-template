@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../component/Button";
@@ -13,7 +12,7 @@ const Home = () => {
   return (
     <StBody>
       <div className="innerBody">
-        <Button text="go Success" onClick={() => navigate(`/success`)} />
+        <Button text="go ReactCICD" onClick={() => navigate(`/success`)} />
         <Button text="make Error" onClick={() => throwError()} />
       </div>
     </StBody>
